@@ -11,13 +11,12 @@ class UsersController < ApplicationController
     #     render json: user, status: :ok
     # end
     def show
-        @user = User.find_by(id: session[:user_id])
-        if @user
-          render json: @user, status: :ok 
+        user = User.find(session[:user_id])
+        if user.valid?
+          render json: user, status: :created
         else
-          render json: {error: "Unauthorized"}, status: :unauthorized
+          render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
         end
-    
    end
 
     def create 

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import '../App.css'
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom"
 
 
 export default function SignUp({ onLogin }) {
+  const navigate = useNavigate()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     // const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -22,10 +24,13 @@ export default function SignUp({ onLogin }) {
         }),
       })
         .then((r) => r.json())
-        .then(onLogin);
+        .then((user) => onLogin(user));
+        navigate("/dashboard")
+
     }
   
     return (
+      // <p>Hello</p>
       <form onSubmit={handleSubmit} className='login-form'>
         <label htmlFor="username">Username:</label>
         <input
@@ -48,7 +53,9 @@ export default function SignUp({ onLogin }) {
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
         /> */}
-        <Button className='login-Btn' type="submit">Submit</Button>
+        <Button className='login-Btn' type="submit">
+          Signup          
+         </Button>
       </form>
     );
   }

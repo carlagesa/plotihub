@@ -43,15 +43,14 @@ export default function BasicButtons() {
     // useEffect(() => {
     //     fetch("http://localhost:3000/me")
     //         .then((response) => response.json())
-    //         .then((data) => {
-    //             setUser(data);
-    //             console.log(data)
-
-    //         }
-    //         )
-    //     // .then((data) => {
-    //     //     console.log(data)
-    //     // })
+    //     //     .then((data) => {
+    //     //         setUser(data);
+    //     //         console.log(data)
+    //     //     }
+    //     //     )
+    //     // // .then((data) => {
+    //     // //     console.log(data)
+    //     // // })
     // }, []);
 
 
