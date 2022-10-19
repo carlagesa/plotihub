@@ -36,6 +36,8 @@ export default function BasicButtons() {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+    const [property, setProperty] = useState([]);
+    const [ currentUser, setCurrentUser ] = useState(null);
 
     // const [user, setUser] = useState([]);
 
@@ -54,6 +56,20 @@ export default function BasicButtons() {
     // }, []);
 
 
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/properties'),
+      
+    ]).then(function(responses){
+      return Promise.all(responses.map(function (response) {
+        return response.json();
+      }))
+    }).then(function(data){
+        setProperty(property);
+      
+    })
+  }, []);
 
     return (
         <div>
