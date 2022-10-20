@@ -92,7 +92,7 @@ export default function Tenants() {
 
     const [property_id, setProperty_id] = useState("");
     const [balance, setBalance] = useState("");
-    const [properties, setProperties] = useState("");
+    const [unit_name, setUnit_name] = useState("");
 
     const [tenant_name, setTenant_name] = useState("");
     const [phone_number, setPhone_number] = useState("");
@@ -104,8 +104,8 @@ export default function Tenants() {
     // const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const handleChange = (event) => {
         setProperty_id(event.target.value);
-      }
-      
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
         fetch("http://localhost:3000/tenants", {
@@ -115,7 +115,7 @@ export default function Tenants() {
             },
             body: JSON.stringify({
                 property_id,
-                // units,
+                unit_name,
                 tenant_name,
                 phone_number,
                 deposit,
@@ -164,16 +164,6 @@ export default function Tenants() {
                                         className='payment-reminders-input'
                                         placeholder='Property ID'></input>
 
-
-                                    {/* <select className='property-dropdown' value={property_id.property_name} onChange={e => setProperty_id(e.target.value)}>
-                                        {property.map((item) => (
-
-                                            <option>{item.property_name}</option>
-
-                                        ))}
-
-                                    </select> */}
-
                                     {/* <select className='property-dropdown' 
                                     onChange={handleChange}
                                     // onChange={e => setProperty_id(e.target.value)}
@@ -183,17 +173,21 @@ export default function Tenants() {
                                         ))}
                                     </select> */}
 
-                                    {/* 
+
                                     <p>Unit</p>
+                                    <input value={unit_name}
+                                        onChange={(e) => setUnit_name(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Unit Name/ Number'></input>
 
-                                    <select className='property-dropdown' value={units} onChange={e => setUnits(e.target.value)}>
-                                    {property.map((item) => (
+                                    {/* <select className='property-dropdown' value={units} onChange={e => setUnits(e.target.value)}>
+                                        {property.map((item) => (
 
-                                        <option >{item.unit_name}</option>
+                                            <option >{item.unit_name}</option>
 
-                                    ))}
+                                        ))}
 
-                                </select> */}
+                                    </select> */}
 
                                     <p>Tenant Name</p>
                                     <input value={tenant_name}
@@ -277,7 +271,7 @@ export default function Tenants() {
                             <TableRow>
                                 <TableCell align="right">Tenant Name</TableCell>
                                 <TableCell align="right">Property Name</TableCell>
-                                <TableCell align="right">Unit ID/Name</TableCell>
+                                <TableCell align="right">Unit Name/ Number</TableCell>
                                 <TableCell align="right">Phone Number</TableCell>
                                 <TableCell align="right">Deposit</TableCell>
                                 <TableCell align="right">Balance</TableCell>
@@ -295,12 +289,12 @@ export default function Tenants() {
                                 >
                                     <TableCell align="right">{item.tenant_name}</TableCell>
                                     <TableCell align="right">{item.property.property_name}</TableCell>
-                                    <TableCell align="right">{item.property.unit_name}</TableCell>
+                                    <TableCell align="right">{item.unit_name}</TableCell>
                                     <TableCell align="right">{item.phone_number}</TableCell>
                                     <TableCell align="right">{item.deposit}</TableCell>
                                     <TableCell align="right">{item.balance}</TableCell>
                                     <TableCell align="right">{item.account_number}</TableCell>
-                                    <TableCell align="right"><Button variant='outlined'>Download</Button></TableCell>
+                                    <TableCell align="right"><Button variant='outlined'>Delete</Button></TableCell>
 
 
                                 </TableRow>
