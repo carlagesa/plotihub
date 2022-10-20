@@ -63,6 +63,41 @@ useEffect(() => {
     // })
 }, []);
 
+const [property_name, setProperty_name] = useState("");
+const [number_of_units, setNumber_of_units] = useState("");
+const [city, setCity] = useState("");
+const [water_rate, setWater_rate] = useState("");
+const [electricity_rate, setElectricity_rate] = useState("");
+const [mpesa_paybill, setMpesa_paybill] = useState("");
+// const [user, setUser] = useState(null);
+
+
+function handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://localhost:3000/properties", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            // user: "",
+            property_name,
+            number_of_units,
+            city,
+            water_rate,
+            electricity_rate,
+            mpesa_paybill
+            
+
+            //   password_confirmation: passwordConfirmation,
+        }),
+    })
+        .then((r) => r.json())
+    // .then((user) => onLogin(user));
+    console.log("POST MADE")
+
+}
+
 
     return (
         <div>
@@ -71,38 +106,89 @@ useEffect(() => {
                 <div className='payment-buttons'>
 
                     <Button variant="outlined" onClick={handleClickOpen}>Add Property</Button>
-                    <Button variant="outlined"> Add Unit </Button>
+                    {/* <Button variant="outlined"> Add Unit </Button> */}
                     <Dialog
                         fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="responsive-dialog-title"
                     >
-                        <DialogTitle id="responsive-dialog-title">
-                            {"Tenant Form"}
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <p>Select Tenant</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input>
-                                <p>Paid Amount</p>  <input className='payment-reminders-input' placeholder='Enter Paid Amount e.g 10000'></input>
-                                <p>Select Tenant</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input>
-                                <p>Payment Type (optional)</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input>
-                                <p>Description (optional)</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input>
-                                {/* <Button variant="outlined">Add PAyment</Button> */}
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button variant="outlined" onClick={handleClose} autoFocus>Add Payment</Button>
+                        <form onSubmit={handleSubmit} >
+                            <DialogTitle id="responsive-dialog-title">
+                                {"Tenant Form"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
 
-                            {/* <Button autoFocus onClick={handleClose}>
-                           Disagree
-                       </Button>
-                       <Button onClick={handleClose} autoFocus>
-                           Agree
-                       </Button> */}
-                        </DialogActions>
+                                    <p> Property</p>
+
+                                    <input value={property_name}
+                                        onChange={(e) => setProperty_name(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Property Name'></input>
+
+
+
+                                    <p>Unit</p>
+                                    <input value={number_of_units}
+                                        onChange={(e) => setNumber_of_units(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Number of Units'></input>
+
+                                    {/* <select className='property-dropdown' value={units} onChange={e => setUnits(e.target.value)}>
+                                        {property.map((item) => (
+
+                                            <option >{item.unit_name}</option>
+
+                                        ))}
+
+                                    </select> */}
+
+                                    <p>City</p>
+                                    <input value={city}
+                                        onChange={(e) => setCity(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='City'></input>
+
+
+                                    <p>Water Rate</p>
+                                    <input
+                                        value={water_rate}
+                                        onChange={(e) => setWater_rate(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Water Rate'></input>
+
+
+                                    <p>Electricity Rate</p>
+                                    <input
+                                        value={electricity_rate}
+                                        onChange={(e) => setElectricity_rate(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Electricity Rate'></input>
+
+                                    <p>Mpesa Paybill</p>
+                                    <input
+                                        value={mpesa_paybill}
+                                        onChange={(e) => setMpesa_paybill(e.target.value)}
+                                        className='payment-reminders-input'
+                                        placeholder='Mpesa Paybill'></input>
+
+
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+
+                                <Button type="submit"
+                                    variant="outlined"
+                                    onClick={handleClose}
+                                    autoFocus>Add Tenant</Button>
+
+                            </DialogActions>
+                        </form>
 
                     </Dialog>
+
+
 
                 </div>
 
