@@ -3,12 +3,12 @@ class TenantsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_response
     
     def index
-        render json: Tenant.all, include:[:property], status: :ok
+        render json: Tenant.all,include:[:property], status: :ok
     end
 
     def show
         tenant = Tenant.find_by!(id: params[:id])
-        render json: tenant, status: :ok
+        render json: tenant,  status: :ok
     end
 
     def create 
@@ -33,7 +33,7 @@ class TenantsController < ApplicationController
     private
 
     def tenant_params
-        params.permit(:tenant_name, :phone_number, :deposit, :balance, :account_number)
+        params.permit(:tenant_name, :phone_number, :deposit, :balance, :account_number, :property_id)
     end
 
     def not_found_response

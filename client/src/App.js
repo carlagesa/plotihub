@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from "./Components/Home";
 import Signup from './Components/Signup'
 import Login from './Components/Login'
+import MiniDrawer from './Components/Drawer'
 import LoginForm from './Components/LoginForm'
 import Invoices from './Components/Invoices'
 import Payment from './Components/Payment'
@@ -18,6 +19,24 @@ import Dashboard from "@mui/icons-material/Dashboard";
 export default function App() {
 
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch("/me").then((response) => {
+          if (response.ok) {
+            response.json().then((user) => setUser(user));
+          }
+        });
+      }, []);
+    
+      if (user) {
+        console.log("Nice and easy");
+
+            // console.log(user)
+        // return <h2>Welcome, {user.username}!</h2>;
+      } else {
+        console.log("We have a problem");
+        // return <Login onLogin={setUser} />;
+      }
 
     // useEffect(() => {
     //     fetch("http://localhost:3000/me")
@@ -38,7 +57,7 @@ export default function App() {
     return (
         <div>
             <Routes>
-                <Route exact path="/" element={<Home />} />
+                <Route exact path="/" element={<App />} />
                 <Route exact path="/login" element={<Login onLogin={setUser} />} />
                 <Route exact path="/signup" element={<Signup onLogin={setUser} />} />
                 <Route exact path="/dashboard" element={<Home/>} />
