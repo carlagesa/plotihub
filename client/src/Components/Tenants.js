@@ -159,18 +159,27 @@ export default function Tenants() {
 
                                     <p> Property</p>
 
-                                    <input value={property_id}
+                                    {/* <input value={property_id}
                                         onChange={(e) => setProperty_id(e.target.value)}
                                         className='payment-reminders-input'
-                                        placeholder='Property ID'></input>
+                                        placeholder='Property ID'></input> */}
 
-                                    {/* <select className='property-dropdown' 
+                                    <select className='property-dropdown' 
                                     onChange={handleChange}
                                     // onChange={e => setProperty_id(e.target.value)}
                                     >
-                                        {property.map((item) => (
-                                            <option value={item.property_id}>{item.property_name}</option>
+                                        {tenant.map((item) => (
+                                            <option value={item.property_id}>{item.property_id}</option>
                                         ))}
+                                    </select>
+
+                                     {/* <select className='property-dropdown' value={property_id} onChange={e => setProperty_id(e.target.value)}>
+                                        {property.map((item) => (
+
+                                            <option >{item.unit_name}</option>
+
+                                        ))}
+
                                     </select> */}
 
 

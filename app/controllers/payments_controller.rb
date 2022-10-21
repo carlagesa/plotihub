@@ -28,12 +28,10 @@ class PaymentsController < ApplicationController
         render json:{}, status: :no_content
     end
 
-
-
     private
 
     def payment_params
-        params.permit(:tenant_name, :paid_amount, :payment_number, :item, :unit_name, :date, :status)
+        params.permit(:tenant_name, :paid_amount, :date, :id)
     end
 
     def not_found_response

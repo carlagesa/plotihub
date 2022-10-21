@@ -34,7 +34,8 @@ const rows = [
 ];
 
 
-export default function Payment() {
+export default function Payment({user}) {
+    const {id} = user
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -47,10 +48,8 @@ export default function Payment() {
         setOpen(false);
     };
 
-    ///Fetching Properties
+    // Start of fetching payments data
     const [payment, setPayment] = useState([]);
-
-
     useEffect(() => {
         fetch("http://localhost:3000/payments")
             .then((response) => response.json())
@@ -64,11 +63,86 @@ export default function Payment() {
         //     console.log(data)
         // })
     }, []);
+    // End of fetching payments data
+
+
 
     const [properties, setProperties] = useState();
     const [tenants, setTenants] = useState();
 
 
+    // Start of fetching property data
+    const [property, setProperty] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3000/properties")
+            .then((response) => response.json())
+            .then((data) => {
+                setProperty(data);
+                console.log(data)
+
+            }
+            )
+        // .then((data) => {
+        //     console.log(data)
+        // })
+    }, []);
+    // End of fetching property data
+
+
+    // Start of fetching tenant data
+    const [tenant, setTenant] = useState([]);
+
+
+    useEffect(() => {
+        fetch("http://localhost:3000/tenants")
+            .then((response) => response.json())
+            .then((data) => {
+                setTenant(data);
+                console.log(data)
+
+            }
+            )
+        // .then((data) => {
+        //     console.log(data)
+        // })
+    }, []);
+    // End of fetching tenant data
+
+
+    // Start of Posting payment data
+    const [date, setDate] = useState("");
+    const [property_name, setProperty_name] = useState("");
+    const [payment_number, setPayment_number] = useState("");
+    const [tenant_name, setTenant_name] = useState("");
+    const [status, setStatus] = useState("");
+    const [paid_amount, setPaid_amount] = useState("");
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetch("http://localhost:3000/payments", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id,
+                date,
+                property_name,
+                payment_number,
+                tenant_name,
+                // status: string,
+                paid_amount
+
+                //   password_confirmation: passwordConfirmation,
+            }),
+        })
+            .then((r) => r.json())
+        // .then((user) => onLogin(user));
+        console.log("POST MADE")
+
+    }
+    // End of Posting payment data
     return (
 
         <div>
@@ -86,55 +160,127 @@ export default function Payment() {
                         onClose={handleClose}
                         aria-labelledby="responsive-dialog-title"
                     >
-                        <DialogTitle id="responsive-dialog-title">
-                            {"Send Balance Reminders"}
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <p>Select Unit</p>
-                                <select className='property-dropdown' value={properties} onChange={e => setProperties(e.target.value)}>
-                                    {payment.map((item) => (
+                        <form onSubmit={handleSubmit} >
 
-                                        <option>{item.unit_name}</option>
+                            <DialogTitle id="responsive-dialog-title">
+                                {"Payment Form"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <p>Select Property</p>
+                                    <select className='property-dropdown' value={property_name} onChange={e => setProperty_name(e.target.value)}>
+                                        {property.map((item) => (
 
-                                    ))}
+                                            <option>{item.property_name}</option>
 
-                                </select> 
-                                <p>Select Tenant</p>
+                                        ))}
 
-                                <select className='property-dropdown' value={tenants} onChange={e => setTenants(e.target.value)}>
-                                    {payment.map((item) => (
-
-                                        <option>{item.tenant_name}</option>
-
-                                    ))}
-
-                                </select>
-                                <p>Paid Amount</p>  <input className='payment-reminders-input' placeholder='Enter Paid Amount e.g 10000'></input>
-                                <p>Payment Date</p>  < ServerRequestDatePicker />
-                                <p>Status</p> 
-
-                                <select className='property-dropdown' value={tenants} onChange={e => setTenants(e.target.value)}>
-                                    {payment.map((item) => (
-
-                                        <option>{item.status}</option>
-
-                                    ))}
                                     </select>
-                                {/* <p>Description (optional)</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input> */}
-                                {/* <Button variant="outlined">Add PAyment</Button> */}
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button variant="outlined" onClick={handleClose} autoFocus>Add Paymentr</Button>
 
-                            {/* <Button autoFocus onClick={handleClose}>
+                                    <input
+                                        onChange={e => setProperty_name(e.target.value)}
+                                        value={property_name}
+                                        className='payment-reminders-input'
+                                        placeholder='Enter Property name' />
+
+
+                                    {/* <select className='property-dropdown' onChange={e => setProperty_name(e.target.value)} value={property_name}>
+                                        {property.map((item) => (
+                                            <option value={item.property_name}>{item.property_name}</option>
+                                        ))}
+                                    </select> */}
+
+
+                                    {/* <p>Select Unit</p>
+                                <select className='property-dropdown' value={properties} onChange={e => setProperties(e.target.value)}>
+                                    {property.map((item) => (
+
+                                        <option>{item.unit_number}</option>
+
+                                    ))}
+
+                                </select>  */}
+                                    <p>Select Tenant</p>
+                                    {/* 
+                                    <select className='property-dropdown' value={tenant_name} onChange={e => setTenant_name(e.target.value)}>
+                                        {tenant.map((item) => (
+
+                                            <option>{item.tenant_name}</option>
+
+                                        ))}
+
+                                    </select> */}
+
+                                    <input
+                                       onChange={e => setTenant_name(e.target.value)}
+                                       value={tenant_name}
+                                        className='payment-reminders-input'
+                                        placeholder='Enter Tenant Name' />
+
+                                    {/* <select className='property-dropdown' onChange={e => setTenant_name(e.target.value)} value={tenant_name}>
+                                        {tenant.map((item) => (
+                                            <option value={item.tenant_name}>{item.tenant_name}</option>
+                                        ))}
+                                    </select> */}
+
+                                    <p>Payment Number</p>
+
+                                    <input
+                                        onChange={e => setPayment_number(e.target.value)}
+                                        value={payment_number}
+                                        className='payment-reminders-input'
+                                        placeholder='Enter Paid Amount e.g 10000' />
+
+
+                                    <p>Paid Amount</p>
+
+                                    <input
+                                        onChange={e => setPaid_amount(e.target.value)}
+                                        value={paid_amount}
+                                        className='payment-reminders-input'
+                                        placeholder='Enter Paid Amount e.g 10000' />
+
+
+                                    <p>Payment Date</p>
+
+                                    <input type="date"
+                                        onChange={e => setDate(e.target.value)}
+                                        value={date}
+                                    />
+                                    {/* < ServerRequestDatePicker
+                                        onChange={e => setDate(e.target.value)}
+                                        value={date}
+                                    /> */}
+                                    <p>Status</p>
+                                    {/* <input className='payment-reminders-input' placeholder='Status' /> */}
+                                    <select
+                                        className='property-dropdown'
+                                        value={status}
+                                        onChange={e => setStatus(e.target.value)}>
+                                        {/* {payment.map((item) => ( */}
+
+                                        <option >Confirmed</option>
+                                        <option >Pending</option>
+                                        {/* <option value={paid}>Paid</option> */}
+
+
+                                        {/* ))} */}
+                                    </select>
+                                    {/* <p>Description (optional)</p>  <input className='payment-reminders-input' placeholder='Select Tenant'></input> */}
+                                    {/* <Button variant="outlined">Add PAyment</Button> */}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button type='submit' variant="outlined" onClick={handleClose} autoFocus>Add Paymentr</Button>
+
+                                {/* <Button autoFocus onClick={handleClose}>
                                 Disagree
                             </Button>
                             <Button onClick={handleClose} autoFocus>
                                 Agree
                             </Button> */}
-                        </DialogActions>
+                            </DialogActions>
+                        </form>
                     </Dialog>
 
 

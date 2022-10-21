@@ -20,23 +20,23 @@ export default function App() {
 
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        fetch("/me").then((response) => {
-          if (response.ok) {
-            response.json().then((user) => setUser(user));
-          }
-        });
-      }, []);
+    // useEffect(() => {
+    //     fetch("/me").then((response) => {
+    //       if (response.ok) {
+    //         response.json().then((user) => setUser(user));
+    //       }
+    //     });
+    //   }, []);
     
-      if (user) {
-        console.log("Nice and easy");
+    //   if (user) {
+    //     console.log("Nice and easy");
 
-            // console.log(user)
-        // return <h2>Welcome, {user.username}!</h2>;
-      } else {
-        console.log("We have a problem");
-        // return <Login onLogin={setUser} />;
-      }
+    //         // console.log(user)
+    //     // return <h2>Welcome, {user.username}!</h2>;
+    //   } else {
+    //     console.log("We have a problem");
+    //     // return <Login onLogin={setUser} />;
+    //   }
 
     // useEffect(() => {
     //     fetch("http://localhost:3000/me")
@@ -57,12 +57,12 @@ export default function App() {
     return (
         <div>
             <Routes>
-                <Route exact path="/" element={<App />} />
+                <Route exact path="/" element={<Home />} />
                 <Route exact path="/login" element={<Login onLogin={setUser} />} />
                 <Route exact path="/signup" element={<Signup onLogin={setUser} />} />
                 <Route exact path="/dashboard" element={<Home/>} />
                 <Route exact path="/invoices" element={<Invoices />} />
-                <Route exact path="/payment" element={<Payment />} />
+                <Route exact path="/payment" element={<Payment user={user} />} />
                 <Route exact path="/expenses" element={<Expenses />} />
                 <Route exact path="/tenant" element={<Tenant />} />
                 <Route exact path="/property" element={<Property />} />

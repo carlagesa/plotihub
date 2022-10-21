@@ -1,6 +1,6 @@
 class Maintenance < ApplicationRecord
     belongs_to :tenant
-    belongs_to :property
+    # belongs_to :property
     
     validates :status, presence: true
     validates :category, presence: true

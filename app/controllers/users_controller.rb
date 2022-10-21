@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_response
-    
+    skip_before_action :authorize, only: :create
+
     def index
         render json: User.all,  status: :ok
     end
@@ -11,12 +12,13 @@ class UsersController < ApplicationController
     #     render json: user, status: :ok
     # end
     def show
-        user = User.find(session[:user_id])
-        if user.valid?
-          render json: user, status: :created
-        else
-          render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
-        end
+        render json: @current_user
+        # user = User.find(session[:user_id])
+        # if user.valid?
+        #   render json: user, status: :created
+        # else
+        #   render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
+        # end
    end
 
     def create 
